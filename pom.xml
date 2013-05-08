@@ -21,7 +21,6 @@
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.2</version>
         <configuration>
-          <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
         </configuration>
         <executions>
@@ -39,18 +38,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-
-
-      <plugin>
-        <groupId>com.bazaarvoice.maven.plugins</groupId>
-        <artifactId>s3-upload-maven-plugin</artifactId>
-        <version>${project.version}</version>
-        <configuration>
-          <bucketName>terminus-artifacts</bucketName>
-          <sourceFile>pom.xml</sourceFile>
-          <destinationFile>pom.xml</destinationFile>
-        </configuration>
       </plugin>
     </plugins>
   </build>
