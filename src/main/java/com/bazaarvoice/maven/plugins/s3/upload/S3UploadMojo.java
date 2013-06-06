@@ -7,6 +7,7 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.Region;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import org.apache.maven.plugin.AbstractMojo;
@@ -43,6 +44,10 @@ public class S3UploadMojo extends AbstractMojo
   @Parameter(property = "s3-upload.destinationFile", required = true)
   private String destinationFile;
 
+  /** Force override of endpoint for S3 regions such as EU. */
+  @Parameter(property = "s3-upload.endpoint")
+  private String endpoint;
+
   @Override
   public void execute() throws MojoExecutionException
   {
@@ -52,6 +57,10 @@ public class S3UploadMojo extends AbstractMojo
     }
 
     AmazonS3 s3 = getS3Client(accessKey, secretKey);
+    if (endpoint != null) {
+      s3.setEndpoint(endpoint);
+    }
+
     if (!s3.doesBucketExist(bucketName)) {
       throw new MojoExecutionException("Bucket doesn't exist: " + bucketName);
     }
