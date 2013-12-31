@@ -27,7 +27,10 @@ public class S3UploadMojo extends AbstractMojo
   @Parameter(property = "s3-upload.secretKey")
   private String secretKey;
 
-  /** Execute all steps up except the upload to the S3.  This can be set to true to perform a "dryRun" execution. */
+  /**
+   *  Execute all steps up except the upload to the S3.
+   *  This can be set to true to perform a "dryRun" execution.
+   */
   @Parameter(property = "s3-upload.doNotUpload", defaultValue = "false")
   private boolean doNotUpload;
 
@@ -69,15 +72,19 @@ public class S3UploadMojo extends AbstractMojo
     }
 
     if (doNotUpload) {
-      getLog().info("File " + sourceFile + " would have be uploaded to s3://" + bucketName + "/" + destination + " (dry run)");
-    } else {
-      boolean success = upload(s3, sourceFile);
-      if (!success) {
-        throw new MojoExecutionException("Unable to upload file to S3.");
-      }
+      getLog().info(String.format("File %s would have be uploaded to s3://%s/%s (dry run)",
+        sourceFile, bucketName, destination));
 
-      getLog().info("File " + sourceFile + " uploaded to s3://" + bucketName + "/" + destination);
+      return;
     }
+
+    boolean success = upload(s3, sourceFile);
+    if (!success) {
+      throw new MojoExecutionException("Unable to upload file to S3.");
+    }
+
+    getLog().info(String.format("File %s uploaded to s3://%s/%s",
+      sourceFile, bucketName, destination));
   }
 
   private static AmazonS3 getS3Client(String accessKey, String secretKey)
