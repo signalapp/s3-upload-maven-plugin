@@ -88,5 +88,11 @@
       <artifactId>aws-java-sdk-s3</artifactId>
       <version>1.10.69</version>
     </dependency>
+    <dependency>
+      <!-- The STS SDK is necessary if role based profiles are used for credentials. -->
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-sts</artifactId>
+      <version>1.10.69</version>
+    </dependency>
   </dependencies>
 </project>
