@@ -76,7 +76,7 @@ public class S3UploadMojo extends AbstractMojo
       s3.setEndpoint(endpoint);
     }
 
-    if (!s3.doesBucketExist(bucketName)) {
+    if (!s3.doesBucketExistV2(bucketName)) {
       throw new MojoExecutionException("Bucket doesn't exist: " + bucketName);
     }
 
