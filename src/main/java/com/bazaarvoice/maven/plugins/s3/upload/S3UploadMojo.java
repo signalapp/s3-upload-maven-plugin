@@ -56,6 +56,10 @@ public class S3UploadMojo extends AbstractMojo
   @Parameter(property = "s3-upload.destination", required = true)
   private String destination;
 
+  /** The AWS region for the client configuration, if it is not available from the region provider chain. */
+  @Parameter(property = "s3-upload.region")
+  private String region;
+
   /** Force override of endpoint for S3 regions such as EU. */
   @Parameter(property = "s3-upload.endpoint")
   private String endpoint;
@@ -71,7 +75,7 @@ public class S3UploadMojo extends AbstractMojo
       throw new MojoExecutionException("File/folder doesn't exist: " + source);
     }
 
-    AmazonS3 s3 = getS3Client(accessKey, secretKey);
+    AmazonS3 s3 = getS3Client(accessKey, secretKey, region);
     if (endpoint != null) {
       s3.setEndpoint(endpoint);
     }
@@ -96,7 +100,7 @@ public class S3UploadMojo extends AbstractMojo
             source, bucketName, destination));
   }
 
-  private static AmazonS3 getS3Client(String accessKey, String secretKey)
+  private static AmazonS3 getS3Client(String accessKey, String secretKey, String region)
   {
     AWSCredentialsProvider provider;
     if (accessKey != null && secretKey != null) {
@@ -114,7 +118,12 @@ public class S3UploadMojo extends AbstractMojo
       );
     }
 
-    return AmazonS3ClientBuilder.standard().withCredentials(provider).build();
+    final AmazonS3ClientBuilder s3ClientBuilder = AmazonS3ClientBuilder.standard().withCredentials(provider);
+    if (region != null) {
+      s3ClientBuilder.setRegion(region);
+    }
+
+    return s3ClientBuilder.build();
   }
 
   private boolean upload(AmazonS3 s3, File sourceFile) throws MojoExecutionException

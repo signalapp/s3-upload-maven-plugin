@@ -15,6 +15,7 @@ Configuration parameters
 |secretKey|S3 secret key | *no* | if unspecified, uses the Default Provider, falling back to env variables |
 |doNotUpload|Dry run| *no* | false |
 |endpoint|Use a different s3 endpoint| *no* | s3.amazonaws.com |
+|region|Explicitly set a region (since 1.6)| *no* | determined from region provider chain |
 
 Example: Upload a file
 ----------------------
@@ -62,4 +63,3 @@ Example: Recursively upload a folder
   </plugins>
 </build>
 ```
-
