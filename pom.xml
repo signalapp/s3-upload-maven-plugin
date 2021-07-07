@@ -32,6 +32,9 @@
 
     <animal-sniffer-maven-plugin.version>1.20</animal-sniffer-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+
+    <aws-sdk-v2.version>2.16.96</aws-sdk-v2.version>
+    <aws-sdk-v1.version>1.12.18</aws-sdk-v1.version>
   </properties>
 
   <build>
@@ -109,18 +112,30 @@
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-core</artifactId>
-      <version>1.11.820</version>
+      <version>${aws-sdk-v1.version}</version>
     </dependency>
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-s3</artifactId>
-      <version>1.11.820</version>
+      <version>${aws-sdk-v1.version}</version>
     </dependency>
     <dependency>
       <!-- The STS SDK is necessary if role based profiles are used for credentials. -->
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-sts</artifactId>
-      <version>1.11.820</version>
+      <version>${aws-sdk-v1.version}</version>
+    </dependency>
+    <dependency>
+      <!-- The v2 auth SDK is necessary if v2 profiles are used for credentials. -->
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>auth</artifactId>
+      <version>${aws-sdk-v2.version}</version>
+    </dependency>
+    <dependency>
+      <!-- The SSO SDK is necessary if sso based profiles are used for credentials. -->
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>sso</artifactId>
+      <version>${aws-sdk-v2.version}</version>
     </dependency>
   </dependencies>
 </project>

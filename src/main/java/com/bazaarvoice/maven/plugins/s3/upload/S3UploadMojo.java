@@ -2,11 +2,16 @@ package com.bazaarvoice.maven.plugins.s3.upload;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSCredentialsProviderChain;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.internal.StaticCredentialsProvider;
+import com.amazonaws.auth.EC2ContainerCredentialsProviderWrapper;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
+import com.amazonaws.auth.SystemPropertiesCredentialsProvider;
+import com.amazonaws.auth.WebIdentityTokenCredentialsProvider;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -96,12 +101,20 @@ public class S3UploadMojo extends AbstractMojo
     AWSCredentialsProvider provider;
     if (accessKey != null && secretKey != null) {
       AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-      provider = new StaticCredentialsProvider(credentials);
+      provider = new AWSStaticCredentialsProvider(credentials);
     } else {
-      provider = new DefaultAWSCredentialsProviderChain();
+      provider = new AWSCredentialsProviderChain(
+              new EnvironmentVariableCredentialsProvider(),
+              new SystemPropertiesCredentialsProvider(),
+              WebIdentityTokenCredentialsProvider.create(),
+              new ProfileCredentialsProvider(),
+              new CliCompatibleCredentialsProvider(),
+              new SsoCompatibleCredentialsProvider(),
+              new EC2ContainerCredentialsProviderWrapper()
+      );
     }
 
-    return new AmazonS3Client(provider);
+    return AmazonS3ClientBuilder.standard().withCredentials(provider).build();
   }
 
   private boolean upload(AmazonS3 s3, File sourceFile) throws MojoExecutionException
