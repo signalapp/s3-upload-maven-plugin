@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.bazaarvoice.commons</groupId>
     <artifactId>bv-opensource-super-pom</artifactId>
-    <version>1.4</version>
+    <version>1.11</version>
   </parent>
 
   <groupId>com.bazaarvoice.maven.plugins</groupId>
@@ -22,8 +22,8 @@
   </scm>
 
   <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <encoding>UTF-8</encoding>
   </properties>
 
@@ -90,7 +90,7 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>3.3.9</version>
+      <version>${maven-plugin-api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
