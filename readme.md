@@ -2,6 +2,11 @@ s3-upload-maven-plugin
 ======================
 Uploads a file or (recursively) the contents of a directory to S3.
 
+Fork notes
+----------
+
+Adds pre-release quality support for AWS SSO credentials.
+
 Configuration parameters
 ------------------------
 
