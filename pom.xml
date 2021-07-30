@@ -18,9 +18,9 @@
   <name>S3 upload maven plugin</name>
 
   <scm>
-    <url>https://github.com/bazaarvoice/s3-upload-maven-plugin</url>
-    <connection>scm:git:git@github.com:bazaarvoice/s3-upload-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:bazaarvoice/s3-upload-maven-plugin.git</developerConnection>
+    <url>https://github.com/signalapp/s3-upload-maven-plugin</url>
+    <connection>scm:git:git@github.com:signalapp/s3-upload-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:signalapp/s3-upload-maven-plugin.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
